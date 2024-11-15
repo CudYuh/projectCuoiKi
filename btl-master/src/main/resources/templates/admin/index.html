@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Home - Admin - Shoe Store</title>
+    <link href="/admin/css/dist/style.css" rel="stylesheet" />
+    <link href="/admin/css/styles.css" rel="stylesheet" />
+    <script src="/admin/js/all.js" type="text/javascript"></script>
+</head>
+
+<body class="sb-nav-fixed">
+<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+    <a class="navbar-brand ps-3" href="/admin">Admin - Shoe Store</a>
+    <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
+            class="fas fa-bars"></i></button>
+    <div class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0" style="height: 60px;">
+        <div th:if="${alertMessage!=null}">
+            <div id="system-alert" class="alert" th:classappend="${alertType}" th:text="${alertMessage}"></div>
+        </div>
+    </div>
+    <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+        <li class="nav-item dropdown">
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                <li></li>
+                <li>
+                    <hr class="dropdown-divider" />
+                </li>
+                <li></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+<div id="layoutSidenav">
+    <div id="layoutSidenav_nav">
+        <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+            <div class="sb-sidenav-menu">
+                <div class="nav">
+                    <div class="sb-sidenav-menu-heading">Trang chủ</div>
+                    <a class="nav-link" href="/admin">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-compass"></i></div>
+                        Quản trị
+                    </a>
+                    <a class="nav-link" href="/">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-compass"></i></div>
+                        Người dùng
+                    </a>
+                    <div class="sb-sidenav-menu-heading">Quản lý dữ liệu</div>
+                    <div
+                            th:if="${#httpSession.getAttribute('admin').getRole == 1 || #httpSession.getAttribute('admin').getRole == 2 }">
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                           data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-users"></i></div>
+                            Người
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <!-- <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" -->
+                        <div id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="/admin/admin">Admin</a>
+                            </nav>
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="/admin/user">User</a>
+                            </nav>
+                        </div>
+                    </div>
+                    <div
+                            th:if="${#httpSession.getAttribute('admin').getRole == 1 || #httpSession.getAttribute('admin').getRole == 3 }">
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                           data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-layer-group"></i></div>
+                            Sản phẩm
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <!-- <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" -->
+                        <div id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="/admin/category">Danh mục</a>
+                                <a class="nav-link" href="/admin/shoe">Giày</a>
+                            </nav>
+                        </div>
+                    </div>
+                    <div
+                            th:if="${#httpSession.getAttribute('admin').getRole == 1 || #httpSession.getAttribute('admin').getRole == 4 }">
+                        <a class="nav-link" href="/admin/order">
+                            <div class="sb-nav-link-icon"><i class="fa-solid fa-list"></i></div>
+                            Đơn hàng
+                        </a>
+                    </div>
+                    <div
+                            th:if="${#httpSession.getAttribute('admin').getRole == 1 || #httpSession.getAttribute('admin').getRole == 5 }">
+                        <a class="nav-link" href="/admin/feedback">
+                            <div class="sb-nav-link-icon"><i class="fa-regular fa-envelope"></i></div>
+                            Phản hồi
+                        </a>
+                    </div>
+                    <br />
+                    <a class="nav-link" href="/admin/changepass">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-lock"></i></div>
+                        Đổi mật khẩu
+                    </a>
+                    <a class="nav-link" href="/admin/logout">
+                        <div class="sb-nav-link-icon"><i class="fa-sharp fa-light fa-left-long"></i></div>
+                        Đăng xuất
+                    </a>
+                </div>
+            </div>
+            <div class="sb-sidenav-footer">
+                <div class="small">Logged in as:</div>
+                <span th:text="${#httpSession.getAttribute('admin').name}"></span>
+            </div>
+        </nav>
+    </div>
+    <div id="layoutSidenav_content" th:include="${content} :: content">
+    </div>
+</div>
+<script src="/admin/js/scripts.js"></script>
+<script src="/admin/assets/demo/chart-area-demo.js"></script>
+<script src="/admin/assets/demo/chart-bar-demo.js"></script>
+<script src="/admin/js/datatables-simple-demo.js"></script>
+</body>
+
+</html>

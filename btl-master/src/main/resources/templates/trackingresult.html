@@ -1,0 +1,91 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<div class="site-section" th:fragment="content">
+
+    <link href="/static/admin/css/dist/style.css" rel="stylesheet" />
+    <link href="/static/admin/css/styles.css" rel="stylesheet" />
+    <script src="/static/admin/js/all.js" type="text/javascript"></script>
+    <style>
+        a {
+            text-decoration: none;
+        }
+    </style>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="h3 mb-3 text-black">Tra cứu đơn hàng</h2>
+                <div id="system-alert" class="d-block text-primary h6 text-uppercase" th:text="${error}"></div>
+            </div>
+            <div class="col-md-12">
+                <div class="card-body">
+                    <div>
+                        <h2>Thông tin đơn hàng</h2>
+                        <p>Mã đơn hàng: <span th:text="${orderFullDetail.order.id}"></span></p>
+                        <p>Người đặt hàng: <span th:text="${orderFullDetail.order.name}"></span></p>
+                        <p>Email: <span th:text="${orderFullDetail.order.email}"></span></p>
+                        <p>SDT: <span th:text="${orderFullDetail.order.phone}"></span></p>
+                        <p>Địa chỉ: <span th:text="${orderFullDetail.order.address}"></span></p>
+                        <p>Ghi chú: <span th:text="${orderFullDetail.order.note}"></span></p>
+                        <p>Thời gian đặt hàng: <span th:text="${orderFullDetail.order.createdTime}"></span></p>
+                        <p>Trạng thái:
+                            <span th:switch="${orderFullDetail.order.status}">
+                                <span th:case="0">Chờ xác nhận</span>
+                                <span th:case="1">Đã xác nhận chờ giao</span>
+                                <span th:case="2">Đang giao</span>
+                                <span th:case="3">Giao thành công</span>
+                                <span th:case="-1">Giao không thành công chờ hoàn trả</span>
+                                <span th:case="-2">Giao không thành công đã hoàn trả</span>
+                                <span th:case="-3">Hủy đơn</span>
+                            </span>
+                        </p>
+                        <p>Tổng: <span th:text="${orderFullDetail.getTotal}"></span></p>
+                    </div>
+                    <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
+                        <div class="datatable-top">
+                            <div class="datatable-dropdown">
+
+                            </div>
+                            <div class="datatable-search">
+
+                            </div>
+                        </div>
+                        <div class="datatable-container">
+                            <table class="datatable-table">
+                                <thead>
+                                    <tr>
+                                        <th>Mã sản phẩm</th>
+                                        <th>Tên</th>
+                                        <th>Ảnh</th>
+                                        <th>Giá</th>
+                                        <th>Màu</th>
+                                        <th>Size</th>
+                                        <th>Số lượng</th>
+                                        <th>Tổng</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="detail : ${orderFullDetail.orderDetails}">
+                                        <td th:text="${detail.orderDetail.shoeId}"></td>
+                                        <td th:text="${detail.title}"></td>
+                                        <td>
+                                            <div th:if="${detail.image != null}">
+                                                <img th:src="@{'data:image/;base64,' + ${detail.base64Image}}"
+                                                    style="max-width: 100px; max-height: 200px;"  alt=""/>
+                                            </div>
+                                        </td>
+                                        <td th:text="${detail.orderDetail.getPriceVND}"></td>
+                                        <td th:text="${detail.orderDetail.color}"></td>
+                                        <td th:text="${detail.orderDetail.size}"></td>
+                                        <td th:text="${detail.orderDetail.quantity}"></td>
+                                        <td th:text="${detail.orderDetail.getTotalPriceVND}"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+        </div>
+    </div>
+    <br />
+</div>

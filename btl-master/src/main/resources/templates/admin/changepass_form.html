@@ -1,0 +1,28 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<div th:fragment="content">
+    <div class="card shadow-lg border-0 rounded-lg mt-5">
+        <div class="card-header">
+            <h3 class="text-center font-weight-light my-4">Đổi mật khẩu</h3>
+        </div>
+        <div class="card-body">
+            <form method="post" th:action="@{/admin/changepass}" th:object="${adminChangePassForm}">
+                <div class="mb-3">
+                    <label for="oldPass" class="form-label">Mật khẩu hiện tại</label>
+                    <input type="password" class="form-control" id="oldPass" th:field="*{oldPass}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="newPass" class="form-label">Mật khẩu mới</label>
+                    <input type="password" class="form-control" id="newPass" th:field="*{newPass}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="confirmNewPass" class="form-label">Xác nhận mật khẩu mới</label>
+                    <input type="password" class="form-control" id="confirmNewPass" th:field="*{confirmNewPass}"
+                        required>
+                </div>
+                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check"></i>&nbsp;Lưu</button>
+            </form>
+        </div>
+    </div>
+</div>

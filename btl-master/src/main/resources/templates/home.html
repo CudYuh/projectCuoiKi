@@ -1,0 +1,154 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<div th:fragment="content">
+  <div class="site-blocks-cover" style="background-image: url('/images/bia4.jpg');" data-aos="fade">
+    <div class="container">
+      <div class="row align-items-start align-items-md-center justify-content-end">
+        <div class="col-md-5 text-center text-md-left pt-5 pt-md-0">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="site-section site-section-sm site-blocks-1">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col-lg-4 d-lg-flex mb-4 mb-lg-0 pl-4" data-aos="fade-up" data-aos-delay="">
+          <div class="icon mr-4 align-self-start">
+            <span class="icon-truck"></span>
+          </div>
+          <div class="text">
+            <h2 class="text-uppercase">Giao hàng miễn phí</h2>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4 d-lg-flex mb-4 mb-lg-0 pl-4" data-aos="fade-up" data-aos-delay="100">
+          <div class="icon mr-4 align-self-start">
+            <span class="icon-refresh2"></span>
+          </div>
+          <div class="text">
+            <h2 class="text-uppercase">1 đổi 1 trong 7 ngày</h2>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4 d-lg-flex mb-4 mb-lg-0 pl-4" data-aos="fade-up" data-aos-delay="200">
+          <div class="icon mr-4 align-self-start">
+            <span class="icon-help"></span>
+          </div>
+          <div class="text">
+            <h2 class="text-uppercase">Hỗ trợ 24/24</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="site-section site-blocks-2">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0" data-aos="fade" data-aos-delay=""
+             th:each="category : ${categories}">
+          <a class="block-2-item" th:href="@{/danh-sach-san-pham?danh-muc={url}(url=${category.url})}">
+            <figure class="image">
+              <img th:src="@{'data:image/jpeg;base64,' + ${category.base64Image()}}" alt="Category Image" class="img-fluid" src="">
+            </figure>
+            <div class="text">
+              <span class="text-uppercase">Branch</span>
+              <h3 th:text="${category.name}"></h3>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="site-section block-3 site-blocks-2 bg-light">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-7 site-section-heading text-center pt-4">
+          <h2>Sản phẩm mới</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="nonloop-block-3 owl-carousel">
+            <div class="item" th:each="shoe : ${newShoes}">
+              <div class="block-4 text-center">
+                <figure class="block-4-image">
+                  <img th:src="@{'data:image/jpeg;base64,' + ${shoe.base64Image()}}" alt="Image placeholder"
+                       class="img-fluid">
+                </figure>
+                <div class="block-4-text p-4">
+                  <h3><a th:href="@{/san-pham/{url}(url=${shoe.id})}" th:text="${shoe.title}"> </a></h3>
+                  <hr/>
+                  <p class="text-primary font-weight-bold" style="margin: 0 0;">
+                    <del th:text="${shoe.getPriceVND()}" th:if="${shoe.promotePrice != null}"></del>
+                    <span th:text="${shoe.getPriceVND()}" th:if="${shoe.promotePrice == null}"></span>
+                  </p>
+                  <p class="text-primary font-weight-bold" style="margin: 0 0;">
+                    <span th:text="${shoe.getPromotePriceVND()}" th:if="${shoe.promotePrice != null}"></span>
+                    <span th:if="${shoe.promotePrice == null}">&nbsp;</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="site-section block-3 site-blocks-2 bg-light">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-7 site-section-heading text-center pt-4">
+          <h2>Giảm nhiều</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="nonloop-block-3 owl-carousel">
+            <div class="item" th:each="shoe : ${saleShoes}">
+              <div class="block-4 text-center">
+                <figure class="block-4-image">
+                  <img th:src="@{'data:image/jpeg;base64,' + ${shoe.base64Image()}}" alt="Image placeholder"
+                       class="img-fluid">
+                </figure>
+                <div class="block-4-text p-4">
+                  <h3><a th:href="@{/san-pham/{url}(url=${shoe.id})}" th:text="${shoe.title}"> </a></h3>
+                  <p class="text-primary font-weight-bold">
+                    <s th:text="${shoe.getPriceVND()}" style="display:block"></s>
+                    <span th:text="${shoe.getPromotePriceVND()}"></span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="site-section block-3 site-blocks-2 bg-light" th:if="${mostBuyShoes !=null}">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-7 site-section-heading text-center pt-4">
+          <h2>Mua nhiều</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="nonloop-block-3 owl-carousel">
+            <div class="item" th:each="shoe : ${mostBuyShoes}">
+              <div class="block-4 text-center">
+                <figure class="block-4-image">
+                  <img th:src="@{'data:image/jpeg;base64,' + ${shoe.base64Image()}}" alt="Image placeholder"
+                       class="img-fluid">
+                </figure>
+                <div class="block-4-text p-4">
+                  <h3><a th:href="@{/san-pham/{url}(url=${shoe.id})}" th:text="${shoe.title}"> </a></h3>
+                  <p class="text-primary font-weight-bold">
+                    <s th:text="${shoe.getPriceVND()}" style="display:block"></s>
+                    <span th:text="${shoe.getPromotePriceVND()}"></span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

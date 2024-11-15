@@ -1,0 +1,26 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<div th:fragment="content">
+    <div class="card mb-4">
+        <div class="card-header">
+            <svg class="svg-inline--fa fa-table me-1" aria-hidden="true" focusable="false" data-prefix="fas"
+                data-icon="table" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg="">
+                <path fill="currentColor"
+                    d="M64 256V160H224v96H64zm0 64H224v96H64V320zm224 96V320H448v96H288zM448 256H288V160H448v96zM64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64z">
+                </path>
+            </svg>
+            <span th:text="${contentName}"></span>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title" th:text="${feedback.subject}"></h5>
+            <p class="card-text" th:text="'From: ' + ${feedback.first_name} + ' ' + ${feedback.last_name}"></p>
+            <p class="card-text" th:text="'Email: ' + ${feedback.email}"></p>
+            <p class="card-text" th:text="'Ngày gửi: ' + ${feedback.createdAt}"></p>
+            <p class="card-text" >Nội dung:</p>
+            <p class="card-text" th:text="${feedback.content}"></p>
+        </div>
+        <div class="card-footer">
+            <a href="/admin/feedback" class="btn btn-primary">Quay lại</a>
+            <a th:href="'/admin/feedback/delete/' + ${feedback.id}" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i>&nbsp;Xóa</a>
+        </div>
+    </div>
+</div>

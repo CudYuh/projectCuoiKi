@@ -1,0 +1,51 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<div th:fragment="content">
+    <div class="card shadow-lg border-0 rounded-lg mt-5">
+        <div class="card-header">
+            <h3 class="text-center font-weight-light my-4" th:text="${contentName}"></h3>
+        </div>
+        <div class="card-body">
+            <form method="post" th:action="@{/admin/admin/add}" th:object="${admin}">
+                <div class="mb-3">
+                    <label for="inputName" class="form-label">Tên</label>
+                    <input type="text" class="form-control" id="inputName" name="name" th:field="*{name}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="inputUsername" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="inputUsername" name="username" th:field="*{username}"
+                        required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="inputRole" class="form-label">Quyền</label>
+                    <select class="form-select" id="inputRole" name="role" th:field="*{role}" required>
+                        <option value="1">Quản lý toàn bộ</option>
+                        <option value="2">Quản lý người</option>
+                        <option value="3">Quản lý sản phẩm</option>
+                        <option value="4">Quản lý đơn hàng</option>
+                        <option value="5">Quản lý phản hồi người dùng</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="inputAddress" class="form-label">Địa chỉ</label>
+                    <input type="text" class="form-control" id="inputAddress" name="address" th:field="*{address}">
+                </div>
+
+                <div class="mb-3">
+                    <label for="inputPhone" class="form-label">SDT</label>
+                    <input type="text" class="form-control" id="inputPhone" name="phone" th:field="*{phone}">
+                </div>
+
+                <div class="mb-3">
+                    <label for="inputPassword" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="inputPassword" name="password"
+                        th:field="*{password}" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check"></i>&nbsp;Lưu</button>
+            </form>
+        </div>
+    </div>
+</div>

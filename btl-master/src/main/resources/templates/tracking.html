@@ -1,0 +1,35 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<div class="site-section" th:fragment="content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="h3 mb-3 text-black">Tra cứu đơn hàng</h2>
+                <div id="system-alert" class="d-block text-primary h6 text-uppercase" th:text="${error}"></div>
+            </div>
+            <div class="col-md-12">
+                <form>
+                    <div class="p-3 p-lg-5 border">
+                        <div class="form-group row">
+                            <div class="col-md-8">
+                                <label for="id_don_hang"></label><input id="id_don_hang" type="text" class="form-control" name="id"
+                                                                        placeholder="ID đơn hàng" required>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="button" onclick="track()" class="btn btn-primary btn-lg btn-block"
+                                    value="Gửi">
+                                <script>
+                                    track = () => {
+                                        window.location.href = '/tra-cuu-don-hang/' + document.getElementById('id_don_hang').value
+                                    }
+
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <br />
+        </div>
+    </div>
+    <br />
+</div>

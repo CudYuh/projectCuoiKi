@@ -1,0 +1,114 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<div th:fragment="content">
+  <div class="bg-light py-3">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 mb-0"><a href="/">Trang chủ</a> <span class="mx-2 mb-0">/</span> <strong
+            class="text-black">Giỏ hàng</strong></div>
+      </div>
+    </div>
+  </div>
+  <div class="site-section">
+    <div class="container">
+      <div th:if="${cartItems != null and cartItems.size() > 0}">
+        <div class="row mb-5">
+          <form class="col-md-12" method="post">
+            <div class="site-blocks-table">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th class="product-thumbnail">Ảnh</th>
+                    <th class="product-name">Tên sản phẩm</th>
+                    <th class="product-size" style="width: 5%;">Kích cỡ</th>
+                    <th class="product-color">Màu sắc</th>
+                    <th class="product-price" style="width: 15%;">Giá tiền</th>
+                    <th class="product-quantity" style="width: 15%;">Số lượng</th>
+                    <th class="product-total" style="width: 15%;">Tổng</th>
+                    <th class="product-remove" style="width: 5%;">Xóa</th>
+                  </tr>
+                </thead>
+                <tbody id="cartItems">
+                  <tr th:each="cartItem : ${cartItems}" th:id="${cartItem.shoeDetailId}">
+                    <td class="product-thumbnail">
+                      <img th:src="@{'data:image/png;base64,' + ${cartItem.base64Image()}}" alt="Image"
+                        class="img-fluid" src="">
+                    </td>
+                    <td class="product-name">
+                      <h2 class="h5 text-black" th:text="${cartItem.title}"></h2>
+                    </td>
+                    <td class="product-size">
+                      <h2 class="h5 text-black" th:text="${cartItem.size}"></h2>
+                    </td>
+                    <td class="product-color">
+                      <h2 class="h5 text-black" th:text="${cartItem.color}"></h2>
+                    </td>
+                    <td>
+                      <span th:if="${cartItem.promotePrice != null}" th:text="${cartItem.getPromotePriceVND()}"></span>
+                      <span th:if="${cartItem.promotePrice == null}" th:text="${cartItem.getPriceVND()}"></span>
+                    </td>
+                    <td>
+                      <div class="input-group mb-3" style="max-width: 120px;">
+                        <div class="input-group-prepend">
+                          <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
+                        </div>
+                        <input type="text" class="form-control text-center" th:value="${cartItem.quantity}"
+                          placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <span th:text="${cartItem.getTotal()}"></span>
+                    </td>
+                    <td>
+                      <a th:href="@{'/gio-hang/del/' + ${cartItem.shoeDetailId}}" class="btn btn-primary btn-sm">X</a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </form>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="row mb-5">
+              <div class="col-md-6 mb-3 mb-md-0">
+                <button class="btn btn-primary btn-sm btn-block" onclick="updateCart()">Cập nhật giỏ hàng</button>
+              </div>
+              <div class="col-md-6">
+                <a class="btn btn-outline-primary btn-sm btn-block" href="/danh-sach-san-pham">Mua thêm</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 pl-5">
+            <div class="row justify-content-end">
+              <div class="col-md-7">
+                <div class="row">
+                  <div class="col-md-12 text-right border-bottom mb-5">
+                    <h3 class="text-black h4 text-uppercase">Đặt hàng</h3>
+                  </div>
+                </div>
+                <div class="row mb-5">
+                  <div class="col-md-6">
+                    <span class="text-black">Tổng:</span>
+                  </div>
+                  <div class="col-md-6 text-right">
+                    <strong class="text-black" th:text="${totalPrice}"></strong>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <a class="btn btn-primary btn-lg py-3 btn-block" href="/dat-hang">Chuẩn bị Đặt hàng</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p th:if="${cartItems == null or cartItems.size() == 0}">Chưa có sản phẩm</p>
+    </div>
+  </div>
+  <script src="/js/custom/cart.js"></script>
+</div>

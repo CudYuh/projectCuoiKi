@@ -1,0 +1,112 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<div th:fragment="content">
+    <div class="card mb-4">
+        <div class="card-header">
+            <svg class="svg-inline--fa fa-table me-1" aria-hidden="true" focusable="false" data-prefix="fas"
+                data-icon="table" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg="">
+                <path fill="currentColor"
+                    d="M64 256V160H224v96H64zm0 64H224v96H64V320zm224 96V320H448v96H288zM448 256H288V160H448v96zM64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64z">
+                </path>
+            </svg>
+            <span th:text="${contentName}"></span>
+        </div>
+        <div class="card-body">
+            <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
+                <div class="datatable-top">
+                </div>
+                <div class="datatable-container"> <div style="overflow: auto; width: 2000px;">
+                    <table id="datatablesSimple" class="datatable-table">
+                        <thead>
+                            <tr>
+                                <td>ID</td>
+                                <td>Người đặt</td>
+                                <td>Email</td>
+                                <td>SDT</td>
+                                <td>Địa chỉ</td>
+                                <td>Trạng thái</td>
+                                <td>Thời gian tạo</td>
+                                <td>Sửa lần cuối bởi</td>
+                                <td>Sửa cuối lúc</td>
+                                <td>Thao tác</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="order : ${data}">
+                                <td th:text="${order.id}"></td>
+                                <td th:text="${order.name}"></td>
+                                <td th:text="${order.email}"></td>
+                                <td th:text="${order.phone}"></td>
+                                <td th:text="${order.address}"></td>
+                                <td>
+                                    <label>
+                                        <select class="datatable-selector" th:data-id="${order.id}"
+                                            onchange="changeStatus(this)">
+                                            <option th:selected="${order.status == 0}" value="0" class="btn btn-secondary">
+                                                Chờ xác nhận</option>
+                                            <option th:selected="${order.status == 1}" value="1"
+                                                class="btn btn-outline-primary">Đã xác nhận chờ giao</option>
+                                            <option th:selected="${order.status == 2}" value="2" class="btn btn-primary">
+                                                Đang giao</option>
+                                            <option th:selected="${order.status == 3}" value="3" class="btn btn-success">
+                                                Giao thành công</option>
+                                            <option th:selected="${order.status == -1}" value="-1"
+                                                class="btn btn-outline-warning">Chờ hoàn trả
+                                            </option>
+                                            <option th:selected="${order.status == -2}" value="-2" class="btn btn-warning">
+                                                Đã hoàn trả</option>
+                                            <option th:selected="${order.status == -3}" value="-3" class="btn btn-danger">
+                                                Hủy đơn</option>
+                                        </select>
+                                    </label>
+                                    <script>
+                                        function changeStatus(sel) {
+                                            window.location.href = "/admin/order/change-status?id=" + sel.attributes["data-id"].value + "&status=" + sel.value;
+                                        }
+                                    </script>
+                                </td>
+                                <td th:text="${order.createdTime}"></td>
+                                <td th:text="${order.lastUpdatedBy}"></td>
+                                <td th:text="${order.lastUpdatedTime}"></td>
+                                <td>
+                                    <a th:href="@{/admin/order/detail/{id}(id=${order.id})}" class="btn btn-primary">Chi
+                                        tiết</a>
+                                    <a th:href="@{/admin/order/delete/{id}(id=${order.id})}"
+                                        class="btn btn-danger"><i class="fa-solid fa-trash-can"></i>&nbsp;Xóa</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table></div>
+                </div>
+                <div class="datatable-bottom">
+                    <div class="datatable-info">
+                        Hiển thị từ <span th:text="${(currentPage-1)*size+1}"></span> đến <span
+                            th:text="${currentPage*size}"></span> của <span th:text="${totalItems}"></span>
+                        bản ghi
+                    </div>
+                    <nav class="datatable-pagination">
+                        Trang:
+                        <label for="page"></label><select class="datatable-selector" id="page">
+                            <option
+                                th:each="number : ${#numbers.sequence(1, (totalItems % size == 0 ? totalItems / size : totalItems/size + 1))}"
+                                th:value="${number}" th:text="${number}" th:selected="${currentPage == number}">
+                            </option>
+                        </select>
+                        <script>
+                            function goToPage() {
+                                value = document.getElementById("page").value
+                                if (value == '1') {
+                                    window.location.href = "/admin/order"
+                                }
+
+                                else {
+                                    window.location.href = "/admin/order?page=" + value
+                                }
+                            }
+                        </script>
+                        <button class="datatable-selector" onclick="goToPage()">Tải</button>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

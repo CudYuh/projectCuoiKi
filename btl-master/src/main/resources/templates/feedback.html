@@ -1,0 +1,76 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<div th:fragment="content">
+  <div class="bg-light py-3">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 mb-0"><a href="/">Trang chủ</a> <span class="mx-2 mb-0">/</span> <strong
+            class="text-black">Liên hệ</strong></div>
+      </div>
+    </div>
+  </div>
+  <div class="site-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h2 class="h3 mb-3 text-black">Liên hệ với chúng tôi</h2>
+          <div th:if="${alertMessage!=null}">
+            <div id="system-alert" class="d-block text-primary h6 text-uppercase" th:classappend="${alertType}" th:text="${alertMessage}"></div>
+          </div>
+        </div>
+        <div class="col-md-7">
+          <form action="/lien-he" method="post" th:object="${feedback}">
+            <div class="p-3 p-lg-5 border">
+              <div class="form-group row">
+                <div class="col-md-6">
+                  <label for="c_fname" class="text-black">Họ <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="c_fname" name="first_name" required
+                    th:field="*{first_name}">
+                </div>
+                <div class="col-md-6">
+                  <label for="c_lname" class="text-black">Tên <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="c_lname" name="last_name" required
+                    th:field="*{last_name}">
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-md-12">
+                  <label for="c_email" class="text-black">Email <span class="text-danger">*</span></label>
+                  <input type="email" class="form-control" id="c_email" name="email" required th:field="*{email}"
+                    placeholder="">
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-md-12">
+                  <label for="c_subject" class="text-black">Chủ đề<span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="c_subject" name="subject" required th:field="*{subject}">
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-md-12">
+                  <label for="c_message" class="text-black">Nội dung<span class="text-danger">*</span></label>
+                  <textarea name="content" id="c_message" cols="30" rows="7" class="form-control" required
+                    th:field="*{content}"></textarea>
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-lg-12">
+                  <input type="submit" class="btn btn-primary btn-lg btn-block" value="Gửi">
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="col-md-5 ml-auto">
+          <div class="p-4 border mb-3">
+            <span class="d-block text-primary h6 text-uppercase">Địa chỉ</span>
+            <p class="mb-0">197 Nguyễn Trãi, Hà Đông, Hà Nội</p>
+          </div>
+          <div class="p-4 border mb-3">
+            <span class="d-block text-primary h6 text-uppercase">Số điện thoại </span>
+            <p class="mb-0">0383515029</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

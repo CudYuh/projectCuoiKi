@@ -1,0 +1,52 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<div th:fragment="content">
+    <div class="bg-light py-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 mb-0"><a href="/">Trang chủ</a> <span class="mx-2 mb-0">/</span> <strong
+                        class="text-black">Đổi mật khẩu</strong></div>
+            </div>
+        </div>
+    </div>
+
+    <link href="/admin/css/dist/style.css" rel="stylesheet" />
+    <link href="/admin/css/styles.css" rel="stylesheet" />
+    <script src="/admin/js/all.js" type="text/javascript"></script>
+    <style>
+        a {
+            text-decoration: none;
+        }
+    </style>
+    <br />
+    <div class="container">
+        <div th:if="${alertMessage!=null}">
+            <div id="system-alert" class="d-block text-primary h6 text-uppercase" th:classappend="${alertType}"
+                th:text="${alertMessage}"></div>
+        </div>
+        <div class="card shadow-lg border-0 rounded-lg mt-5">
+            <div class="card-header">
+                <h3 class="text-center font-weight-light my-4">Đổi mật khẩu</h3>
+            </div>
+            <div class="card-body">
+                <form method="post" th:action="@{/doi-mat-khau}" th:object="${userChangePassForm}">
+                    <div class="mb-3">
+                        <label for="oldPass" class="form-label">Mật khẩu hiện tại</label>
+                        <input type="password" class="form-control" id="oldPass" th:field="*{oldPass}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="newPass" class="form-label">Mật khẩu mới</label>
+                        <input type="password" class="form-control" id="newPass" th:field="*{newPass}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="confirmNewPass" class="form-label">Xác nhận mật khẩu mới</label>
+                        <input type="password" class="form-control" id="confirmNewPass" th:field="*{confirmNewPass}"
+                            required>
+                    </div>
+                    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check"></i>&nbsp;Lưu</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

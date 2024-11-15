@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+
+<head>
+  <title>Yourshoes</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" th:href="@{/fonts/icomoon/style.css}">
+  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+  <link rel="stylesheet" th:href="@{/css/magnific-popup.css}">
+  <link rel="stylesheet" th:href="@{/css/jquery-ui.css}">
+  <link rel="stylesheet" th:href="@{/css/owl.carousel.min.css}">
+  <link rel="stylesheet" th:href="@{/css/owl.theme.default.min.css}">
+  <link rel="stylesheet" th:href="@{/css/aos.js}">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+
+<body>
+  <div class="site-wrap">
+    <header class="site-navbar" role="banner">
+      <div class="site-navbar-top">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
+              <div action="#" class="site-block-top-search">
+                <span class="icon icon-search2"></span>
+                <label for="searchInput">Search</label>
+                <input id="searchInput" type="text" class="form-control border-0" placeholder="Search"
+                  name="search_query" th:value="${search_query}">
+                <script>
+                  document.getElementById("searchInput").addEventListener("keyup", function (event) {
+                    if (event.key === "Enter") {
+                      window.location.href = "/tim-kiem?search_query=" + document.getElementById("searchInput").value
+                    }
+                  });
+                </script>
+              </div>
+            </div>
+            <div class="col-12 mb-3 mb-md-0 col-md-4 order-1 order-md-2 text-center">
+              <div class="site-logo">
+                <a href="/" class="js-logo-clone">Yourshoes</a>
+              </div>
+            </div>
+            <div class="col-6 col-md-4 order-3 order-md-3 text-right">
+              <div class="site-top-icons">
+                <ul>
+                  <li th:if="${#httpSession.getAttribute('user')!=null}">
+                    <a th:href="@{/thong-tin-tai-khoan}" th:text="${#httpSession.getAttribute('user').getName + ','}"></a></li>
+                  <li th:if="${#httpSession.getAttribute('user')!=null}">
+                    <a th:href="@{/dang-xuat}">Đăng xuất</a>
+                  </li>
+                  <li th:if="${#httpSession.getAttribute('user')==null}">
+                    <a th:href="@{/dang-nhap}">Đăng nhập</a>
+                  </li>
+                  <li th:if="${#httpSession.getAttribute('user')==null}">
+                    <a th:href="@{/dang-ky}">Đăng ký</a>
+                  </li>
+                  <li>
+                    <a th:href="@{/gio-hang}" class="site-cart">
+                      <span class="icon icon-shopping_cart"></span> Giỏ hàng
+                    </a>
+                  </li>
+                  <li class="d-inline-block d-md-none ml-md-0"><a href="#" class="site-menu-toggle js-menu-toggle"><span
+                        class="icon-menu"></span></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <nav class="site-navigation text-right text-md-center" role="navigation">
+        <div class="container">
+          <ul class="site-menu js-clone-nav d-none d-md-block">
+            <li><a href="/">Trang chủ</a></li>
+            <li class="has-children active">
+              <a href="/">Danh mục</a>
+              <ul class="dropdown">
+                <li th:each="category : ${categories}">
+                  <a th:href="@{/danh-sach-san-pham?danh-muc={categoryURL}(categoryURL=${category.url})}"
+                    th:text="${category.name}"></a>
+                </li>
+              </ul>
+            </li>
+            <li><a th:href="@{/danh-sach-san-pham}">Sản phẩm</a></li>
+            <li><a th:href="@{/lien-he}">Liên hệ</a></li>
+            <li><a th:href="@{/tra-cuu-don-hang}">Tra cứu đơn hàng</a></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+  </div>
+  <div th:include="${content} :: content">
+
+  </div>
+  <div th:include="footer"></div>
+
+  <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+  <script th:src="@{/js/jquery-ui.js}"></script>
+  <script th:src="@{/js/popper.min.js}"></script>
+  <script th:src="@{/js/bootstrap.min.js}"></script>
+  <script th:src="@{/js/owl.carousel.min.js}"></script>
+  <script th:src="@{/js/jquery.magnific-popup.min.js}"></script>
+  <script th:src="@{/js/aos.js}"></script>
+  <script th:src="@{/js/main.js}"></script>
+
+</body>
+
+</html>

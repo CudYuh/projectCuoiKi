@@ -1,0 +1,96 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<div th:fragment="content">
+    <div class="card shadow-lg border-0 rounded-lg mt-5">
+        <div class="card-header">
+            <h3 class="text-center font-weight-light my-4" th:text="'Sửa Category có Id: ' + ${id}"></h3>
+        </div>
+        <div class="card-body">
+            <form th:object="${shoe}">
+                <div class="mb-3">
+                    <label for="inputTitle" class="form-label">Title</label>
+                    <input type="text" class="form-control" id="inputTitle" name="title" th:field="*{title}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="inputCategory" class="form-label">Category</label>
+                    <select class="form-select" id="inputCategory" name="categoryId" th:field="*{categoryId}" required>
+                        <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">
+                        </option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="inputHotOrder" class="form-label">Hot Order</label>
+                    <input type="number" class="form-control" id="inputHotOrder" name="hotOrder" th:field="*{hotOrder}"
+                        required>
+                </div>
+                <div class="mb-3">
+                    <label for="inputPrice" class="form-label">Price</label>
+                    <input type="number" class="form-control" id="inputPrice" name="price" th:field="*{price}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="inputPromotePrice" class="form-label">PromotePrice</label>
+                    <input type="number" class="form-control" id="inputPromotePrice" name="promotePrice"
+                        th:field="*{promotePrice}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="inputDescription" class="form-label">Description</label>
+                    <textarea class="form-control" id="inputDescription" name="description" th:field="*{description}"
+                        required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="inputImage" class="form-label">Image</label>
+                    <input type="file" class="form-control" id="inputImage" name="imageFile" accept="image/*">
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        Chi tiết giày
+                    </div>
+                    <div class="card-body">
+                        <div class="datatable-container">
+                            <table class="datatable-table">
+                                <thead>
+                                    <tr>
+                                        <th>Color</th>
+                                        <th>Size</th>
+                                        <th>Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="shoeDetails">
+                                    <tr th:each="shoeDetail : ${shoeDetails}" th:data-id="${shoeDetail.id}">
+                                        <td th:text="${shoeDetail.color}"></td>
+                                        <td th:text="${shoeDetail.size}"></td>
+                                        <td>
+                                            <button th:data-id="${shoeDetail.id}" th:data-color="${shoeDetail.color}"
+                                                th:data-size="${shoeDetail.size}"
+                                                class="btn btn-warning">Sửa</button>
+                                            <button th:data-id="${shoeDetail.id}" onclick="deleteShoeDetail(this)"
+                                                class="btn btn-danger">Xóa</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr id="addShoeDetailRow" style="display:none">
+                                        <td><input type="text" id="color"></td>
+                                        <td><input type="text" id="size"></td>
+                                        <td>
+                                            <button class="btn btn-outline-success" type="button"
+                                                onclick="saveShoeDetail()"><i class="fa-solid fa-check"></i>&nbsp;Lưu</button>
+                                            <button class="btn btn-outline-primary" type="button"
+                                                onclick="resetNewShoeDetail()"><i class="fa-solid fa-rotate-right"></i>&nbsp;Làm mới</button>
+                                            <button class="btn btn-outline-danger" type="button"
+                                                onclick="cancelAddShoeDetail()"><i class="fa-solid fa-xmark"></i>&nbsp;Hủy</button>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                            <button class="btn btn-outline-primary" type="button" onclick="showAddShoeDetailRow()">Thêm
+                                loại</button>
+                            <script src="/admin/js/shoe.js"></script>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+                <button type="button" class="btn btn-primary" onclick="addShoe(window.location.href)"><i class="fa-solid fa-check"></i>&nbsp;Lưu</button>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,131 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<div class="site-section" th:fragment="content">
+  <div class="container">
+    <div class="row mb-5">
+      <div class="col-md-9 order-2">
+        <div class="row">
+          <div class="col-md-12 mb-5">
+            <div class="float-md-left mb-4">
+              <h2 class="text-black h5">Danh sách sản phẩm tìm kiếm được </h2>
+            </div>
+            <div class="d-flex">
+              <div class="dropdown mr-1 ml-md-auto">
+                <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" id="dropdownMenuOffset"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Lọc -
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
+                  <button class="dropdown-item" onclick="filter('newest')">Mới nhất</button>
+                  <button class="dropdown-item" onclick="filter('oldest')">Cũ nhất</button>
+                  <div class="dropdown-divider"></div>
+                  <button class="dropdown-item" onclick="filter('az')">Tên: A đến Z</button>
+                  <button class="dropdown-item" onclick="filter('za')">Tên: Z đến A</button>
+                  <div class="dropdown-divider"></div>
+                  <button class="dropdown-item" onclick="filter('lowhigh')">Giá: Thấp đến cao</button>
+                  <button class="dropdown-item" onclick="filter('highlow')">Giá: Cao đến thấp</button>
+                </div>
+              </div>
+              <script th:inline="javascript">
+                function filter(fil_type) {
+                  window.location.href = [[${ currentPath }]] + "?" + [[${ query == null ? '' : 'query=' + query }]]+"&filter=" + fil_type;
+                }
+              </script>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-5" th:if="${search_query == null or search_query == ''}">
+          <h2 class="d-block text-primary h6 text-uppercase">Chưa nhập chuỗi tìm kiếm</h2>
+        </div>
+        <div class="row mb-5" th:unless="${search_query == null or search_query == ''}">
+          <div th:each="shoe : ${data}" class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
+            <div class="block-4 text-center border">
+              <figure class="block-4-image">
+                <a th:href="'/san-pham/' + ${shoe.id}"><img th:src="@{|data:image/png;base64,${shoe.base64Image()}|}"
+                    alt="Image placeholder" class="img-fluid"></a>
+              </figure>
+              <div class="block-4-text p-4">
+                <h3><a th:href="'/san-pham/' + ${shoe.id}" th:text="${shoe.title}"></a></h3>
+                <hr/>
+                <p class="text-primary font-weight-bold" style="margin: 0 0;">
+                  <del th:text="${shoe.getPriceVND()}" th:if="${shoe.promotePrice != null}"></del>
+                  <span th:text="${shoe.getPriceVND()}" th:if="${shoe.promotePrice == null}"></span>
+                </p>
+                <p class="text-primary font-weight-bold" style="margin: 0 0;">
+                  <span th:text="${shoe.getPromotePriceVND()}" th:if="${shoe.promotePrice != null}"></span>
+                  <span th:if="${shoe.promotePrice == null}">&nbsp;</span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div th:if="${totalPages == 0}" class="float-md-left mb-4">
+            <h2 class="d-block text-primary h6 text-uppercase">Chưa có sản phẩm</h2>
+          </div>
+        </div>
+        <div th:if="${totalPages > 0}" class="row" data-aos="fade-up">
+          <div class="col-md-12 text-center">
+            <div class="site-block-27">
+              <ul>
+                <li th:classappend="${currentPage == 1} ? 'disabled'">
+                  <a th:if="${currentPage != 1}"
+                    th:attr="href=${currentPath +'?'+ (search_query == null ? '' : 'search_query=' + search_query) + '&filter=' + currentFilter + '&page=' + (currentPage - 1)}">&lt;</a>
+                  <span th:if="${currentPage == 1}">&lt;</span>
+                </li>
+                <li th:each="page : ${#numbers.sequence(1, totalPages)}"
+                  th:classappend="${currentPage == page} ? 'active'">
+                  <a th:if="${currentPage != page}"
+                    th:attr="href=${currentPath +'?'+ (search_query == null ? '' : 'search_query=' + search_query) + '&filter=' + currentFilter + '&page=' + page }"
+                    th:text="${page}"></a>
+                  <span th:if="${currentPage == page}" th:text="${page}"></span>
+                </li>
+                <li th:classappend="${currentPage == totalPages} ? 'disabled'">
+                  <a th:if="${currentPage != totalPages}"
+                    th:attr="href=${currentPath +'?'+ (search_query == null ? '' : 'search_query=' + search_query) + '&filter=' + currentFilter + '&page=' + (currentPage + 1)}">&gt;</a>
+                  <span th:if="${currentPage == totalPages}">&gt;</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 order-1 mb-5 mb-md-0">
+        <div class="border p-4 rounded mb-4">
+          <h3 class="mb-3 h6 text-uppercase text-black d-block">Danh mục sản phẩm</h3>
+          <ul class="list-unstyled mb-0">
+            <li class="mb-1"><a th:href="@{/danh-sach-san-pham}" class="d-flex"><span>Tất cả</span></a></li>
+            <li class="mb-1" th:each="category : ${categories}"><a
+                th:href="@{/danh-sach-san-pham?danh-muc={url}(url=${category.url})}" class="d-flex"><span
+                  th:text="${category.name}">
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="site-section site-blocks-2">
+          <div class="row justify-content-center text-center mb-5">
+            <div class="col-md-7 site-section-heading pt-4">
+              <h2>Danh mục sản phẩm</h2>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6 col-md-6 col-lg-4 mb-4 mb-lg-0" data-aos="fade" data-aos-delay=""
+              th:each="category : ${categories}">
+              <a class="block-2-item" th:href="@{/danh-sach-san-pham?danh-muc={url}(url=${category.url})}">
+                <figure class="image">
+                  <img th:src="@{'data:image/jpeg;base64,' + ${category.base64Image()}}" alt="" class="img-fluid">
+                </figure>
+                <div class="text">
+                  <span class="text-uppercase">Thương hiệu</span>
+                  <h3 th:text="${category.name}"></h3>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
